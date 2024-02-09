@@ -16,7 +16,8 @@
     height: 100%;
     object-fit: cover; /* Cover the entire container */
     z-index: -1; /* Send the video to the background */
-    opacity: 80%;
+    opacity: 60%;
+    
   }
   
 .top-bar {
