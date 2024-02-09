@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./WeatherApp.css";
 import search_icon from "../assets/search.png";
 import clear from "../assets/clear.png";
@@ -12,6 +12,8 @@ import sky from "../assets/Timelapse clouds Full HD Free stock footage _ Relaxin
 
 const WeatherApp = () => {
   let api_key = "7a82e7145e2a38e50a64ffc8ae4abf5d";
+
+    const [wicon,setWicon] = useState(cloud);
 
   const search = async () => {
     try {
@@ -33,10 +35,43 @@ const WeatherApp = () => {
       const temperatureElement = document.getElementsByClassName("weather-temp");
       const locationElement = document.getElementsByClassName("weather-location");
   
-      humidityElement[0].innerHTML = data.main.humidity;
-      windElement[0].innerHTML = data.wind.speed;
-      temperatureElement[0].innerHTML = data.main.temp;
+      humidityElement[0].innerHTML = data.main.humidity+"%";
+      windElement[0].innerHTML = Math.floor(data.wind.speed)+"kmph";
+      temperatureElement[0].innerHTML = Math.floor(data.main.temp)+"°c";
       locationElement[0].innerHTML = data.name;
+
+      if(data.weather[0].icon==="01d" || data.weather[0].icon==="01n")
+      {
+        setWicon(clear);
+      }
+      else if(data.weather[0].icon==="02d" || data.weather[0].icon==="02n")
+      {
+        setWicon(cloud);
+      }
+      else if(data.weather[0].icon==="03d" || data.weather[0].icon==="03n")
+      {
+        setWicon(drizzle);
+      }
+      else if(data.weather[0].icon==="04d" || data.weather[0].icon==="04n")
+      {
+        setWicon(drizzle);
+      }
+      else if(data.weather[0].icon==="09d" || data.weather[0].icon==="09n")
+      {
+        setWicon(rain);
+      }
+      else if(data.weather[0].icon==="10d" || data.weather[0].icon==="10n")
+      {
+        setWicon(rain);
+      }
+      else if(data.weather[0].icon==="13d" || data.weather[0].icon==="13n")
+      {
+        setWicon(snow);
+      }
+      else
+      {
+        setWicon(clear);
+      }
     } catch (error) {
       console.error('Error occurred while fetching or processing data:', error);
       // Handle the error appropriately, e.g., display an error message to the user
@@ -65,7 +100,7 @@ const WeatherApp = () => {
         </div>
       </div>
       <div className="weather-image">
-        <img src={cloud} alt="" />
+        <img src={wicon} alt="" />
       </div>
       <div className="weather-temp">24°c</div>
       <div className="weather-location">London</div>
